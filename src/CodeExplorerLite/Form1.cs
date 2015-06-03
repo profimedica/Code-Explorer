@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -340,33 +341,12 @@ EndProject");
         }
 
         /// <summary>
-        /// Helper class used for sorting
-        /// </summary>
-        class TimeName : IComparer
-        {
-            public int Time;
-            public int Hits;
-            public string Namespace;
-            public string Class;
-            public string Method;
-            public string Number;
-            public decimal Average;
-            public decimal Min;
-            public decimal Max;
-
-            public int Compare(object x, object y)
-            {
-                return ((TimeName)x).Time > ((TimeName)y).Time ? 0 : 1;
-            }
-        }
-
-        /// <summary>
         /// Extracted only for debug (allow changes of containing functions at debug time)
         /// </summary>
         /// <param name="times"></param>
         /// <param name="Number"></param>
         /// <returns></returns>
-        private TimeName GetMethodByNumber(List<TimeName> times, string Number)
+        private MethodHitInfo GetMethodByNumber(List<MethodHitInfo> times, string Number)
         {
             return times.Where(p => p.Number.Equals(Number)).FirstOrDefault();
         }
@@ -378,7 +358,7 @@ EndProject");
         {
 
             List<string> linesCsproj = File.ReadAllLines("C:\\Log\\Log.html", Encoding.UTF8).ToList();
-            List<TimeName> times = new List<TimeName>();
+            List<MethodHitInfo> times = new List<MethodHitInfo>();
             foreach (string line in linesCsproj)
             {
                 if (line.Length < 10)
@@ -386,7 +366,7 @@ EndProject");
                     continue;
                 }
                 string pLine = line;
-                TimeName tn = new TimeName();
+                MethodHitInfo tn = new MethodHitInfo();
                 tn.Namespace = pLine.Substring(0, pLine.IndexOf("</span>"));
                 tn.Namespace = tn.Namespace.Substring(tn.Namespace.LastIndexOf(">") + 1);
                 pLine = pLine.Substring(pLine.IndexOf("</span>") + 7);
@@ -409,7 +389,7 @@ EndProject");
                 tn.Number = pLine.Substring(0, pLine.IndexOf("</span>"));
                 tn.Number = tn.Number.Substring(tn.Number.LastIndexOf(">") + 1);
 
-                TimeName timeName = GetMethodByNumber(times, tn.Number);
+                MethodHitInfo timeName = GetMethodByNumber(times, tn.Number);
 
                 if (timeName != null)
                 {
@@ -438,7 +418,7 @@ EndProject");
             }
 
             // Compute Average time per hit
-            foreach (TimeName ob in times)
+            foreach (MethodHitInfo ob in times)
             {
                 ob.Average = ob.Time / ob.Hits;
             }
@@ -446,7 +426,7 @@ EndProject");
 
             foreach (string sortType in new string[] { "A", "B", "C", "D", "E" })
             {
-                List<TimeName> listTimeName = new List<TimeName>();
+                List<MethodHitInfo> listTimeName = new List<MethodHitInfo>();
                 listTimeName.AddRange(times);
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(@"<style>.CSSTableGenerator {
@@ -569,7 +549,7 @@ EndProject");
                 sb.AppendLine("<tr><th><a href='b.html'>Hits</a></td><td><a href='a.html'>Total</a></td><td><a href='e.html'>Min</a></td><td><a href='c.html'>Med</a></td><td><a href='d.html'>Max</a></td><td>Ns</td><td>Class</td><td>Method</td><td>Id</td></tr>");
                 while (listTimeName.Count > 0)
                 {
-                    TimeName element = null;
+                    MethodHitInfo element = null;
                     int positon = -1;
                     for (int i = 0; i < listTimeName.Count; i++)
                     {
@@ -646,6 +626,21 @@ EndProject");
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/startflorin/Code-Explorer/");
+        }
+
+        private void buttonViewAsGraph_Click(object sender, EventArgs e)
+        {
+            DiagramSourceWriter dsw = new DiagramSourceWriter();
+            dsw.ToDiagram();
+                       
+            if (File.Exists(@"C:\Program Files (x86)\Graphviz2.39\bin\dot.exe"))
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = @"C:\Program Files (x86)\Graphviz2.39\bin\dot.exe";
+                startInfo.Arguments = @"-Tpng -o C:\Log\diagram.png C:\Log\diagram.gv";
+                Process.Start(startInfo);
+                Process.Start("C:\\Log\\diagram.png");
+            }
         }
     }
 }

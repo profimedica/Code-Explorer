@@ -33,15 +33,16 @@ namespace CodeExplorerLite
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.buttonInstertLoggingSystem = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.buttonEraseLog = new System.Windows.Forms.Button();
             this.buttonViewLog = new System.Windows.Forms.Button();
             this.buttonAnalyzeLog = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.buttonViewAsGraph = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,6 +92,16 @@ namespace CodeExplorerLite
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Project";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Maroon;
+            this.label3.Location = new System.Drawing.Point(99, 103);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(428, 17);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "This version will not check if the logging system is already inserted!";
             // 
             // buttonInstertLoggingSystem
             // 
@@ -157,16 +168,6 @@ namespace CodeExplorerLite
             this.buttonAnalyzeLog.UseVisualStyleBackColor = true;
             this.buttonAnalyzeLog.Click += new System.EventHandler(this.buttonAnalyzeLog_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Maroon;
-            this.label3.Location = new System.Drawing.Point(99, 103);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(428, 17);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "This version will not check if the logging system is already inserted!";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -182,17 +183,29 @@ namespace CodeExplorerLite
             this.linkLabel1.Font = new System.Drawing.Font("Modern No. 20", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.Location = new System.Drawing.Point(74, 9);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(465, 25);
+            this.linkLabel1.Size = new System.Drawing.Size(492, 25);
             this.linkLabel1.TabIndex = 8;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Fast way to start working with a new project";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // buttonViewAsGraph
+            // 
+            this.buttonViewAsGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonViewAsGraph.Location = new System.Drawing.Point(408, 310);
+            this.buttonViewAsGraph.Name = "buttonViewAsGraph";
+            this.buttonViewAsGraph.Size = new System.Drawing.Size(126, 32);
+            this.buttonViewAsGraph.TabIndex = 9;
+            this.buttonViewAsGraph.Text = "View as Graph";
+            this.buttonViewAsGraph.UseVisualStyleBackColor = true;
+            this.buttonViewAsGraph.Click += new System.EventHandler(this.buttonViewAsGraph_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(617, 353);
+            this.Controls.Add(this.buttonViewAsGraph);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonAnalyzeLog);
@@ -225,6 +238,7 @@ namespace CodeExplorerLite
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button buttonViewAsGraph;
     }
 }
 
