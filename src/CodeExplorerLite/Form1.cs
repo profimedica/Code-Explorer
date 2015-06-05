@@ -340,16 +340,6 @@ EndProject");
             System.Diagnostics.Process.Start("C:\\Log\\A.html");
         }
 
-        /// <summary>
-        /// Extracted only for debug (allow changes of containing functions at debug time)
-        /// </summary>
-        /// <param name="times"></param>
-        /// <param name="Number"></param>
-        /// <returns></returns>
-        private MethodHitInfo GetMethodByNumber(List<MethodHitInfo> times, string Number)
-        {
-            return times.Where(p => p.Number.Equals(Number)).FirstOrDefault();
-        }
 
         /// <summary>
         /// Sort method hits by different criteria like number of hits and time measurements
@@ -389,7 +379,7 @@ EndProject");
                 tn.Number = pLine.Substring(0, pLine.IndexOf("</span>"));
                 tn.Number = tn.Number.Substring(tn.Number.LastIndexOf(">") + 1);
 
-                MethodHitInfo timeName = GetMethodByNumber(times, tn.Number);
+                MethodHitInfo timeName = MethodHitInfo.GetMethodByNumber(times, tn.Number);
 
                 if (timeName != null)
                 {
